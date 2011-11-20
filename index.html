@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      body {
+        font-family: "Helvetica Neue","Helvetica", sans-serif
+      }
+      #shredder {
+        width: 100%; 
+        height: 400px;
+        bottom: 0px;
+        position: fixed;
+      }
+      #shredder .joined {
+        position: relative;
+        bottom: -300px;
+        -webkit-transition: all 0.5s;
+        width: 400px;
+        margin: 0 auto;
+        float: none;
+        z-index: 4;
+        cursor: pointer;
+      }
+      #shredder .joined.animate {
+        bottom: 270px;
+      }
+      .fg, .bg {
+        position: absolute;
+        width: 100%;
+      }
+      .fg {
+        background: url(shredder-fg.png) no-repeat center 217px;
+        z-index: 5;
+        height: 400px;
+      }
+      .fg.on {
+        background: url(shredder-fg-on.png) no-repeat center 217px;
+      }
+      .bg {
+        background: url(shredder-bg.png) no-repeat center 0px;
+        height: 217px;
+        top: 65px;
+      }
+      #polaroids {
+        z-index: 3;
+        position: absolute;
+      }
+      .polaroid {
+        border: 1px solid #aaa;
+        padding: .5em .5em 2em .5em;
+        text-align: center;
+        float: left;
+        margin-right: 5px;
+        display: -webkit-box;
+        -webkit-box-align: center;
+        -webkit-box-pack: center;
+        background: #fff;
+        box-shadow: 0px 4px 4px rgba(0,0,0,0.2);
+      }
+      .polaroid canvas {
+
+      }
+      [draggable=true] {
+        -khtml-user-drag: element;
+        -webkit-user-drag: element;
+        -khtml-user-select: none;
+        -webkit-user-select: none;
+        cursor: move;
+      }
+      #dragdummy {
+        width: 100px;
+        height: 100px;
+        background: red;
+      }
+      #cvs {
+        display: none;
+      }
+      #info {
+        position: fixed;
+        top: 25px;
+        right: 25px;
+      } 
+      [draggable] {
+        -moz-user-select: none;
+        -khtml-user-select: none;
+        -webkit-user-select: none;
+        user-select: none;
+      }
+      .cred {
+        font-size: 0.6em;
+        color: #ccc;
+      }
+      .cred a {
+        color: #aaa;
+      }
+      a{
+        color: #000;
+      }
+      a:hover {
+        text-decoration: none;
+      }
+      #tip {
+        position: absolute;
+        top: 300px;
+        left: 50px;
+        background: url(pointer.png) no-repeat;
+        width: 100px;
+        height: 200px;
+      }
+
+    </style>
+    <script type="text/javascript">
+      (function(){
+        var twitterWidgets = document.createElement('script');
+        twitterWidgets.type = 'text/javascript';
+        twitterWidgets.async = true;
+        twitterWidgets.src = '//platform.twitter.com/widgets.js';
+        document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+      })();
+    </script>
+    <script src="deshred.js" type="text/javascript" charset="utf-8"></script>
+    <script src="run.js" type="text/javascript" charset="utf-8"></script>
+  </head>
+  <body>
+    
+    <div id="polaroids"></div>
+    <div id="tip"></div>
+
+    <div id="shredder">
+      <div class="bg"></div>
+      <div class="fg" id="fg"></div>
+    </div>
+
+    <img src="shredder-fg-on.png" style="display:none" />
+
+
+    <div id="info">
+      <h1>Drag drop image deshredder</h1>
+      <p>Also: drag your own shredded images into the deshredder.</p>
+      <p>Coffeescript + HTML + CSS. No libraries.</p>
+      <p>Strip detection & deshredding code 60 lines of coffeescript.</p>
+      <p>Complete code, with animations etc.</p>
+      <p><a href="http://truffles.me.uk">Making of</a></p>
+      <a href="https://twitter.com/timruffles" class="twitter-follow-button" data-show-count="false">Follow @timruffles</a>
+      <p class="cred">Image by <a href="http://www.flickr.com/people/gotshoo">Chris Scheufele</a></p>
+    </div>
+  </body>
+</html>
