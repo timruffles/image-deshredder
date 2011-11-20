@@ -119,6 +119,12 @@
         document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
       })();
     </script>
+    <script>
+      if(/MSIE/.test(navigator.userAgent)) {
+        alert("Sorry, only works with webkit or mozilla. Making things work in IE feels is work, not fun :)")
+        window.location = "http://google.com/chrome";
+      }
+    </script>
     <script src="deshred.js" type="text/javascript" charset="utf-8"></script>
     <script src="run.js" type="text/javascript" charset="utf-8"></script>
   </head>
