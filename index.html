@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <title>Drag-drop image deshredder</title>
     <style>
       body {
         font-family: "Helvetica Neue","Helvetica", sans-serif
@@ -15,6 +16,7 @@
         position: relative;
         bottom: -300px;
         -webkit-transition: all 0.5s;
+        -moz-transition: all 0.5s;
         width: 400px;
         margin: 0 auto;
         float: none;
@@ -52,6 +54,7 @@
         float: left;
         margin-right: 5px;
         display: -webkit-box;
+        display: -moz-box;
         -webkit-box-align: center;
         -webkit-box-pack: center;
         background: #fff;
@@ -63,8 +66,10 @@
       [draggable=true] {
         -khtml-user-drag: element;
         -webkit-user-drag: element;
+        -moz-user-drag: element;
         -khtml-user-select: none;
         -webkit-user-select: none;
+        -moz-user-select: none;
         cursor: move;
       }
       #dragdummy {
@@ -79,14 +84,8 @@
         position: fixed;
         top: 25px;
         right: 25px;
-        z-index: 100;
       } 
-      [draggable] {
-        -moz-user-select: none;
-        -khtml-user-select: none;
-        -webkit-user-select: none;
-        user-select: none;
-      }
+
       .cred {
         font-size: 0.6em;
         color: #ccc;

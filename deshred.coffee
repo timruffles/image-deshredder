@@ -39,7 +39,7 @@ Array::sum = -> @reduce (sum,v) -> sum + v
 
 Array::bottomQuartile = ->
   @slice(0).sort((a,b) -> (a == b && 0) || (a > b && 1) || -1)
-           .slice(0,round (this.length / 2))
+           .slice(0,round (this.length / 4))
 
 Rect = (left,right,@components) ->
   @[0] = left

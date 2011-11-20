@@ -85,7 +85,7 @@ Array.prototype.sum = function() {
 Array.prototype.bottomQuartile = function() {
   return this.slice(0).sort(function(a, b) {
     return (a === b && 0) || (a > b && 1) || -1;
-  }).slice(0, round(this.length / 2));
+  }).slice(0, round(this.length / 4));
 };
 Rect = function(left, right, components) {
   this.components = components;

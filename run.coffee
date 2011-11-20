@@ -48,6 +48,9 @@ doc.on "DOMContentLoaded", ->
       two.drawImage image, 0, 0
       back.appendChild pol
 
+  
+      back.on "dragend", (e) ->
+        e.preventDefault()
       back.on "dragstart", (e) ->
         e.dataTransfer.setData "text/plain", img 
   
@@ -89,8 +92,10 @@ doc.on "DOMContentLoaded", ->
 
     scaleImage target, 400, 400, img, targetCtx
     targetCtx.drawImage joined, 0, 0
-
-    polaroid.appendChild target
+  
+    ffFix = doc.createElement "div"
+    ffFix.appendChild target
+    polaroid.appendChild ffFix
     shred.appendChild polaroid
     polaroid.onclick = -> 
       polaroid.parentNode.removeChild(polaroid)
@@ -102,6 +107,8 @@ doc.on "DOMContentLoaded", ->
 
 
   shred.on "drop", (e) ->
+
+    e.preventDefault()
     
     if lastJoined
       lastJoined.parentNode?.removeChild(lastJoined)

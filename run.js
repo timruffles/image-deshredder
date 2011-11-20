@@ -70,6 +70,9 @@ doc.on("DOMContentLoaded", function() {
       scaleImage(pol, maxWidth, maxHeight, image, two);
       two.drawImage(image, 0, 0);
       back.appendChild(pol);
+      back.on("dragend", function(e) {
+        return e.preventDefault();
+      });
       back.on("dragstart", function(e) {
         return e.dataTransfer.setData("text/plain", img);
       });
@@ -80,7 +83,7 @@ doc.on("DOMContentLoaded", function() {
     return e.preventDefault();
   });
   joinImage = function(img) {
-    var csv, ctx, data, joined, joinedCtx, offset, part, polaroid, sourceImage, target, targetCtx, width, _len, _ref;
+    var csv, ctx, data, ffFix, joined, joinedCtx, offset, part, polaroid, sourceImage, target, targetCtx, width, _len, _ref;
     csv = doc.createElement("canvas");
     attrs(csv, {
       width: img.width,
@@ -114,7 +117,9 @@ doc.on("DOMContentLoaded", function() {
     targetCtx = target.getContext("2d");
     scaleImage(target, 400, 400, img, targetCtx);
     targetCtx.drawImage(joined, 0, 0);
-    polaroid.appendChild(target);
+    ffFix = doc.createElement("div");
+    ffFix.appendChild(target);
+    polaroid.appendChild(ffFix);
     shred.appendChild(polaroid);
     polaroid.onclick = function() {
       return polaroid.parentNode.removeChild(polaroid);
@@ -126,6 +131,7 @@ doc.on("DOMContentLoaded", function() {
   };
   return shred.on("drop", function(e) {
     var file, reader, _ref;
+    e.preventDefault();
     if (lastJoined) {
       if ((_ref = lastJoined.parentNode) != null) {
         _ref.removeChild(lastJoined);
