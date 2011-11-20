@@ -1,88 +1,148 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset='utf-8'>
+  <head>
+    <style>
+      body {
+        font-family: "Helvetica Neue","Helvetica", sans-serif
+      }
+      #shredder {
+        width: 100%; 
+        height: 400px;
+        bottom: 0px;
+        position: fixed;
+      }
+      #shredder .joined {
+        position: relative;
+        bottom: -300px;
+        -webkit-transition: all 0.5s;
+        width: 400px;
+        margin: 0 auto;
+        float: none;
+        z-index: 4;
+        cursor: pointer;
+      }
+      #shredder .joined.animate {
+        bottom: 270px;
+      }
+      .fg, .bg {
+        position: absolute;
+        width: 100%;
+      }
+      .fg {
+        background: url(shredder-fg.png) no-repeat center 217px;
+        z-index: 5;
+        height: 400px;
+      }
+      .fg.on {
+        background: url(shredder-fg-on.png) no-repeat center 217px;
+      }
+      .bg {
+        background: url(shredder-bg.png) no-repeat center 0px;
+        height: 217px;
+        top: 65px;
+      }
+      #polaroids {
+        z-index: 3;
+        position: absolute;
+      }
+      .polaroid {
+        border: 1px solid #aaa;
+        padding: .5em .5em 2em .5em;
+        text-align: center;
+        float: left;
+        margin-right: 5px;
+        display: -webkit-box;
+        -webkit-box-align: center;
+        -webkit-box-pack: center;
+        background: #fff;
+        box-shadow: 0px 4px 4px rgba(0,0,0,0.2);
+      }
+      .polaroid canvas {
 
-  <title>timruffles/image-deshredder @ GitHub</title>
+      }
+      [draggable=true] {
+        -khtml-user-drag: element;
+        -webkit-user-drag: element;
+        -khtml-user-select: none;
+        -webkit-user-select: none;
+        cursor: move;
+      }
+      #dragdummy {
+        width: 100px;
+        height: 100px;
+        background: red;
+      }
+      #cvs {
+        display: none;
+      }
+      #info {
+        position: fixed;
+        top: 25px;
+        right: 25px;
+      } 
+      [draggable] {
+        -moz-user-select: none;
+        -khtml-user-select: none;
+        -webkit-user-select: none;
+        user-select: none;
+      }
+      .cred {
+        font-size: 0.6em;
+        color: #ccc;
+      }
+      .cred a {
+        color: #aaa;
+      }
+      a{
+        color: #000;
+      }
+      a:hover {
+        text-decoration: none;
+      }
+      #tip {
+        position: absolute;
+        top: 300px;
+        left: 50px;
+        background: url(pointer.png) no-repeat;
+        width: 100px;
+        height: 200px;
+      }
 
-  <style type="text/css">
-    body {
-      margin-top: 1.0em;
-      background-color: #6d34a5;
-      font-family: Helvetica, Arial, FreeSans, san-serif;
-      color: #ffffff;
-    }
-    #container {
-      margin: 0 auto;
-      width: 700px;
-    }
-    h1 { font-size: 3.8em; color: #92cb5a; margin-bottom: 3px; }
-    h1 .small { font-size: 0.4em; }
-    h1 a { text-decoration: none }
-    h2 { font-size: 1.5em; color: #92cb5a; }
-    h3 { text-align: center; color: #92cb5a; }
-    a { color: #92cb5a; }
-    .description { font-size: 1.2em; margin-bottom: 30px; margin-top: 30px; font-style: italic;}
-    .download { float: right; }
-    pre { background: #000; color: #fff; padding: 15px;}
-    hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
-    .footer { text-align:center; padding-top:30px; font-style: italic; }
-  </style>
-</head>
+    </style>
+    <script type="text/javascript">
+      (function(){
+        var twitterWidgets = document.createElement('script');
+        twitterWidgets.type = 'text/javascript';
+        twitterWidgets.async = true;
+        twitterWidgets.src = '//platform.twitter.com/widgets.js';
+        document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+      })();
+    </script>
+    <script src="deshred.js" type="text/javascript" charset="utf-8"></script>
+    <script src="run.js" type="text/javascript" charset="utf-8"></script>
+  </head>
+  <body>
+    
+    <div id="polaroids"></div>
+    <div id="tip"></div>
 
-<body>
-  <a href="https://github.com/timruffles/image-deshredder"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
-
-  <div id="container">
-
-    <div class="download">
-      <a href="https://github.com/timruffles/image-deshredder/zipball/master">
-        <img border="0" width="90" src="https://github.com/images/modules/download/zip.png"></a>
-      <a href="https://github.com/timruffles/image-deshredder/tarball/master">
-        <img border="0" width="90" src="https://github.com/images/modules/download/tar.png"></a>
+    <div id="shredder">
+      <div class="bg"></div>
+      <div class="fg" id="fg"></div>
     </div>
 
-    <h1><a href="https://github.com/timruffles/image-deshredder">image-deshredder</a>
-      <span class="small">by <a href="https://github.com/timruffles">timruffles</a></span></h1>
+    <img src="shredder-fg-on.png" style="display:none" />
 
-    <div class="description">
-      
+
+    <div id="info">
+      <h1>Drag drop image deshredder</h1>
+      <p>Also: drag your own shredded images into the deshredder.</p>
+      <p>Coffeescript + HTML + CSS. No libraries.</p>
+      <p>Strip detection & deshredding code 60 lines of coffeescript.</p>
+      <p>Complete code, with animations etc.</p>
+      <p><a href="http://truffles.me.uk">Making of</a></p>
+      <a href="https://twitter.com/timruffles" class="twitter-follow-button" data-show-count="false">Follow @timruffles</a>
+      <p class="cred">Image by <a href="http://www.flickr.com/people/gotshoo">Chris Scheufele</a></p>
     </div>
-
-    
-
-    
-
-    
-
-    
-
-    
-      <h2>Authors</h2>
-      <p>Tim Ruffles (timruffles@googlemail.com)<br/>      </p>
-    
-
-    
-      <h2>Contact</h2>
-      <p>Tim Ruffles (timruffles@googlemail.com)<br/>      </p>
-    
-
-    <h2>Download</h2>
-    <p>
-      You can download this project in either
-      <a href="https://github.com/timruffles/image-deshredder/zipball/master">zip</a> or
-      <a href="https://github.com/timruffles/image-deshredder/tarball/master">tar formats.
-    </p>
-    <p>You can also clone the project with <a href="http://git-scm.com">Git</a>
-      by running:
-      <pre>$ git clone git://github.com/timruffles/image-deshredder</pre>
-    </p>
-
-    <div class="footer">
-      get the source code on GitHub : <a href="https://github.com/timruffles/image-deshredder">timruffles/image-deshredder</a>
-    </div>
-
-  </div>
-
-</body>
+  </body>
 </html>
