@@ -38,7 +38,7 @@ getDistance = (offsetA,offsetB,image,fn = total) ->
 Array::sum = -> @reduce (sum,v) -> sum + v
 
 Array::bottomQuartile = ->
-  @slice(0).sort((a,b) -> (a == b && 0) || (a > b && 1) || -1)
+  @slice(0).sort((a,b) -> if a == b then 0 else (a > b && 1) || -1)
            .slice(0,round (this.length / 4))
 
 Rect = (left,right,@components) ->
